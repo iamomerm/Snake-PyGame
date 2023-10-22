@@ -2,8 +2,9 @@
 # ╚═╗║║║╠═╣╠╩╗║╣
 # ╚═╝╝╚╝╩ ╩╩ ╩╚═╝
 
-import pygame
 from random import choice, randint
+
+import pygame
 
 # Init
 pygame.init()
@@ -14,6 +15,7 @@ pygame.display.set_caption('Snake.py')
 FONT = pygame.font.SysFont('consolas', 15)
 HORIZONTAL_STEPS = [i for i in range(25, 575) if i % 10 == 0]
 VERTICAL_STEPS = [i for i in range(25, 375) if i % 10 == 0]
+
 
 def draw_window():
     WIN.fill((255, 255, 255))
@@ -40,9 +42,11 @@ def draw_window():
         pygame.draw.rect(WIN, (0, 0, 0), pygame.Rect(*globals()['snake'].values()))
 
         # Snack
-        pygame.draw.rect(WIN, (randint(0, 255), randint(0, 255), randint(0, 255)), pygame.Rect(*globals()['snack'].values()))
+        pygame.draw.rect(WIN, (randint(0, 255), randint(0, 255), randint(0, 255)),
+                         pygame.Rect(*globals()['snack'].values()))
 
     pygame.display.update()  # Update Display
+
 
 def move():
     if globals()['direction'] == 'R':
@@ -54,13 +58,14 @@ def move():
     elif globals()['direction'] == 'D':
         globals()['snake']['y'] += 10
 
+
 def main():
     directions = {pygame.K_LEFT: 'L', pygame.K_RIGHT: 'R', pygame.K_UP: 'U', pygame.K_DOWN: 'D'}
 
     globals()['gameover'] = False
     globals()['timer'] = 180
     globals()['score'] = 0
-    globals()['direction']  = 'R'
+    globals()['direction'] = 'R'
     globals()['snake'] = {'x': 300, 'y': 200, 'width': 10, 'height': 10}
     globals()['snack'] = {'x': choice(HORIZONTAL_STEPS), 'y': choice(VERTICAL_STEPS), 'width': 10, 'height': 10}
 
@@ -109,6 +114,7 @@ def main():
 
         draw_window()
     pygame.quit()
+
 
 if __name__ == '__main__':
     main()
