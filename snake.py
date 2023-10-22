@@ -19,8 +19,9 @@ def draw_window():
     WIN.fill((255, 255, 255))
 
     if globals()['gameover']:
-        WIN.blit(FONT.render('Game Over !', False, (0, 0, 0)), (10, 10))
-        WIN.blit(FONT.render('Press "R" to Retry ..', False, (0, 0, 0)), (10, 30))
+        WIN.blit(FONT.render(f'Score: %d' % globals()['score'], False, (0, 0, 0)), (10, 10))
+        WIN.blit(FONT.render('Game Over !', False, (0, 0, 0)), (10, 30))
+        WIN.blit(FONT.render('Press "R" to Retry ..', False, (0, 0, 0)), (10, 60))
 
     else:
         WIN.blit(FONT.render(f'Score: %d' % globals()['score'], False, (0, 0, 0)), (10, 10))
@@ -63,7 +64,6 @@ def main():
     globals()['snake'] = {'x': 300, 'y': 200, 'width': 10, 'height': 10}
     globals()['snack'] = {'x': choice(HORIZONTAL_STEPS), 'y': choice(VERTICAL_STEPS), 'width': 10, 'height': 10}
 
-
     # Game
     clock = pygame.time.Clock()
     run = True
@@ -97,11 +97,13 @@ def main():
             globals()['timer'] = 180
 
         # Game Over
-        if globals()['timer'] == 0:
-            print('Timeout - Game Over!')
-            globals()['gameover'] = True
+        game_over_conditions = [
+            globals()['snake']['x'] in [0, 600],
+            globals()['snake']['y'] in [0, 400],
+            globals()['timer'] == 0
+        ]
 
-        if globals()['snake']['x'] in [0, 600] or globals()['snake']['y'] in [0, 400]:
+        if any(game_over_conditions):
             print('Game Over!')
             globals()['gameover'] = True
 
